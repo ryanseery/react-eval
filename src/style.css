@@ -1,0 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+
+body {
+  padding: 3rem;
+  background: #eee;
+  font-size: 16px;
+  font-family: "Noto Sans", sans-serif;
+  width: 100%;
+}
+
+h3 {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+h4 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+button {
+  background: #fff;
+  border: 1px solid grey;
+}
+
+.container {
+  /* max-width: 800px; */
+  max-width: 1280px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 0.8em;
+}
+
+.no-favorites {
+  padding: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorites-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-flow: wrap;
+}
+
+.favorite-player {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: #eee;
+  width: 566px;
+}
+
+.player-info {
+  flex: 1;
+  padding: 0 1em;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-info {
+  text-align: center;
+}
+
+.player-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-bottom: 1em;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.inner-container {
+  padding: 1em;
+}
+
+table {
+  border: none;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.table-header {
+  border-bottom: 1px solid black;
+}
+
+td {
+  padding: 0.5em;
+}
+
+.td-player-name {
+  text-align: left;
+  vertical-align: middle;
+}
+
+.td-player-stat {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.player-row:nth-child(odd) {
+  background-color: #f2f2f2;
+}

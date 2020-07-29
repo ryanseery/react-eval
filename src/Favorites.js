@@ -1,8 +1,7 @@
 import React from "react";
 import { Button } from "./Button";
-import { ACTIONS } from "./index";
 
-const Favorite = ({ player, dispatch }) => {
+const Favorite = ({ player, removeFavorite }) => {
   return (
     <div className="favorite-player">
       <img src={player.img} alt={player.name} />
@@ -27,12 +26,7 @@ const Favorite = ({ player, dispatch }) => {
         </div>
 
         <div className="remove-favorite">
-          <Button
-            className="remove"
-            onClick={() =>
-              dispatch({ type: ACTIONS.REMOVE_FAVORITE, payload: player.pid })
-            }
-          >
+          <Button className="remove" onClick={() => removeFavorite(player.pid)}>
             Remove
           </Button>
         </div>
@@ -41,7 +35,7 @@ const Favorite = ({ player, dispatch }) => {
   );
 };
 
-const Favorites = ({ favorites, dispatch }) => {
+const Favorites = ({ favorites, removeFavorite }) => {
   return (
     <div className="inner-container">
       <h2>Favorites:</h2>
@@ -52,7 +46,11 @@ const Favorites = ({ favorites, dispatch }) => {
       ) : (
         <div className="favorites-container">
           {favorites.map((player) => (
-            <Favorite key={player.pid} player={player} dispatch={dispatch} />
+            <Favorite
+              key={player.pid}
+              player={player}
+              removeFavorite={removeFavorite}
+            />
           ))}
         </div>
       )}

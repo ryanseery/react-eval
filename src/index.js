@@ -77,6 +77,16 @@ function reducer(state, action) {
   }
 }
 
+const addFavorite = (pid) => ({
+  type: ACTIONS.ADD_FAVORITE,
+  payload: pid,
+});
+
+const removeFavorite = (pid) => ({
+  type: ACTIONS.REMOVE_FAVORITE,
+  payload: pid,
+});
+
 const App = () => {
   const [state, dispatch] = React.useReducer(reducer, {
     loading: true,
@@ -99,11 +109,7 @@ const App = () => {
         });
 
         // read payload
-        const resp = await response.json();
-
-        // create favorites key value
-
-        const payload = resp.map((player) => ({ ...player, favorite: false }));
+        const payload = await response.json();
 
         // set json data to state
         dispatch({ type: ACTIONS.SUCCESS, payload });
@@ -114,18 +120,27 @@ const App = () => {
     })();
   }, []);
 
-  console.log("state: ", state);
+  const actions = React.useMemo(
+    () => ({
+      addFavorite: (pid) => dispatch(addFavorite(pid)),
+      removeFavorite: (pid) => dispatch(removeFavorite(pid)),
+    }),
+    []
+  );
 
   return (
     <div className="container">
-      {state.loading && <div>Loading...</div>}
+      {state.loading && <div className="fetch-style">Loading...</div>}
 
-      {state.error && <div>Error: {state.error}</div>}
+      {state.error && <div className="fetch-style">Error: {state.error}</div>}
 
       {!state.loading && !state.error ? (
         <>
-          <Favorites favorites={state.favorites} dispatch={dispatch} />
-          <PlayerList data={state.data} dispatch={dispatch} />
+          <Favorites
+            favorites={state.favorites}
+            removeFavorite={actions.removeFavorite}
+          />
+          <PlayerList data={state.data} addFavorite={actions.addFavorite} />
         </>
       ) : null}
     </div>

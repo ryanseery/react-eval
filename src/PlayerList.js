@@ -1,6 +1,5 @@
 import React from "react";
 import { Button } from "./Button";
-import { ACTIONS } from "./index";
 
 function xPosition(x) {
   if (x >= 10) {
@@ -9,27 +8,23 @@ function xPosition(x) {
   return Number.parseFloat(x).toPrecision(2);
 }
 
-const PlayerRow = ({ player, dispatch }) => {
+const PlayerRow = ({ player, addFavorite }) => {
   return (
     <tr className="player-row">
       <td>
-        <Button
-          onClick={() =>
-            dispatch({ type: ACTIONS.ADD_FAVORITE, payload: player.pid })
-          }
-        >
+        <Button onClick={() => addFavorite(player.pid)}>
           Add to Favorites
         </Button>
       </td>
-      <td className="td-player-name">{player.name}</td>
-      <td className="td-player-stat">{xPosition(player.pts)}</td>
-      <td className="td-player-stat">{xPosition(player.reb)}</td>
-      <td className="td-player-stat">{xPosition(player.ast)}</td>
+      <td className="col player-name">{player.name}</td>
+      <td className="col player-stat">{xPosition(player.pts)}</td>
+      <td className="col player-stat">{xPosition(player.reb)}</td>
+      <td className="col player-stat">{xPosition(player.ast)}</td>
     </tr>
   );
 };
 
-const PlayerList = ({ data, dispatch }) => {
+const PlayerList = ({ data, addFavorite }) => {
   // sort the data
   const renderData = React.useMemo(() => data.sort((a, b) => b.pts - a.pts), [
     data,
@@ -42,13 +37,17 @@ const PlayerList = ({ data, dispatch }) => {
         <tbody>
           <tr className="table-header">
             <th></th>
-            <th className="td-player-name">Name</th>
-            <th className="td-player-stat">PTS</th>
-            <th className="td-player-stat">REB</th>
-            <th className="td-player-stat">AST</th>
+            <th className="col player-name">Name</th>
+            <th className="col player-stat">PTS</th>
+            <th className="col player-stat">REB</th>
+            <th className="col player-stat">AST</th>
           </tr>
           {renderData.map((player) => (
-            <PlayerRow key={player.pid} player={player} dispatch={dispatch} />
+            <PlayerRow
+              key={player.pid}
+              player={player}
+              addFavorite={addFavorite}
+            />
           ))}
         </tbody>
       </table>

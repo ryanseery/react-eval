@@ -1,12 +1,6 @@
 import React from "react";
 import { Button } from "./Button";
-
-function xPosition(x) {
-  if (x >= 10) {
-    return Number.parseFloat(x).toPrecision(3);
-  }
-  return Number.parseFloat(x).toPrecision(2);
-}
+import { xPosition } from "./utils";
 
 const PlayerRow = ({ player, addFavorite }) => {
   return (

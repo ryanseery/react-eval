@@ -2,6 +2,7 @@ import React from "react";
 import { render } from "react-dom";
 import PlayerList from "./PlayerList";
 import Favorites from "./Favorites";
+import { getUpdatedArray } from "./utils";
 import "./style.css";
 
 // url
@@ -39,34 +40,30 @@ function reducer(state, action) {
     case ACTIONS.ADD_FAVORITE: {
       const dataToUpdate = [...state.data];
 
-      const playerToAddToFav = dataToUpdate.filter(
-        (player) => player.pid === action.payload
-      );
-
-      const updatedData = dataToUpdate.filter(
-        (player) => player.pid !== action.payload
+      const [player, updatedData] = getUpdatedArray(
+        "pid",
+        action.payload,
+        dataToUpdate
       );
 
       return {
         ...state,
         data: [...updatedData],
-        favorites: [...state.favorites, ...playerToAddToFav],
+        favorites: [...state.favorites, { ...player }],
       };
     }
     case ACTIONS.REMOVE_FAVORITE: {
       const dataToUpdate = [...state.favorites];
 
-      const playerToRemove = dataToUpdate.filter(
-        (player) => player.pid === action.payload
-      );
-
-      const updatedData = dataToUpdate.filter(
-        (player) => player.pid !== action.payload
+      const [player, updatedData] = getUpdatedArray(
+        "pid",
+        action.payload,
+        dataToUpdate
       );
 
       return {
         ...state,
-        data: [...state.data, ...playerToRemove],
+        data: [...state.data, { ...player }],
         favorites: [...updatedData],
       };
     }
@@ -108,7 +105,7 @@ const App = () => {
           signal: abortController.signal,
         });
 
-        // read payload
+        // read response
         const payload = await response.json();
 
         // set json data to state
@@ -117,6 +114,11 @@ const App = () => {
         console.error(`fetchError: ${err}`);
         dispatch({ type: ACTIONS.FAILURE, payload: err.message });
       }
+
+      // stop fetch if component unmount
+      return () => {
+        abortController.abort();
+      };
     })();
   }, []);
 

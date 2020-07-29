@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "./Button";
+import { xPosition } from "./utils";
 
 const Favorite = ({ player, removeFavorite }) => {
   return (
@@ -11,17 +12,17 @@ const Favorite = ({ player, removeFavorite }) => {
         <div className="player-stats">
           <div className="stat">
             <span className="state-title">PTS</span>
-            <span className="state-points">{player.pts}</span>
+            <span className="state-points">{xPosition(player.pts)}</span>
           </div>
 
           <div className="stat">
             <span className="state-title">REB</span>
-            <span className="state-points">{player.reb}</span>
+            <span className="state-points">{xPosition(player.reb)}</span>
           </div>
 
           <div className="stat">
             <span className="state-title">AST</span>
-            <span className="state-points">{player.ast}</span>
+            <span className="state-points">{xPosition(player.ast)}</span>
           </div>
         </div>
 
